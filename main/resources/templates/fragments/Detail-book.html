@@ -1,0 +1,85 @@
+ <!-- Chi tiết sản phẩm -->
+ <div th:fragment="Detail-book" class="detail_wrap container">
+     
+     <div class="detail_left">
+         <img th:src="${detailBook.image}">
+     </div>
+     
+     <div class="detail_right">
+         <form th:action="${session.userLogin} != null ? @{/save/order-detail} : @{/login}" 
+         	th:method="${session.userLogin} != null ? post : get" class="detail_right-wrap"
+         	onsubmit="return confirm('Are you sure you want to buy this book?')">
+         	 <input type="hidden" th:name="book_id" th:value="${detailBook.book_id}" />
+             <h4 class="detail_name" th:text="${detailBook.title}"></h4>
+             <div class="detail_info">
+                 <div class="detail_info_left">
+                     <div class="detail_major">
+                     <span>Thể loại:</span>
+                     <span th:text="'Sách ' + ${detailBook.category.name}"></span>
+                     </div>
+                     <div class="detail_author">
+                         <span>Tác giả:</span>
+                         <span th:text="${detailBook.author}"></span>
+                     </div>
+                 </div>
+                 <div class="detail_info_right">
+                     <div class="detail_date">
+                         <span>Ngày phát hành:</span>
+                         <span th:text="${detailBook.publish}"></span>
+                     </div>
+                     <div class="detail_numpage">
+                         <span>Số trang:</span>
+                         <span th:text="${detailBook.page}"></span>
+                     </div>
+                 </div>
+             </div>
+             <div class="detail_price">
+                 <div class="new_price">
+                     <span th:text="${detailBook.price/1000} + '.000 đ'"></span> 
+                 </div>
+                 <div class="old_price">
+                     <span th:text="${(detailBook.price + 100000)/1000} + '.000 đ'"></span> 
+                 </div>
+                 <div class="khuyenmai">
+                     <span th:text="${'-' + 10000000/(detailBook.price + 100000)} + '%'"></span>
+                 </div>
+             </div>
+             <div class="detail_quantity">
+                 <span>Số lượng</span>
+                 <div class="detail_quantity-input">
+                     <div class="product--quantity detail_quantity-decrease">&minus;</div>
+                     <input type="number" th:id="quantity" th:name="quantity" min="1" max="10" value="1">
+                     <div class="product--quantity detail_quantity-increase">+</div>
+                 </div>
+             </div>
+
+             <button th:if="${session.userLogin == null}" type="submit" class="detail_cart" style="margin-left: 180px;">
+                 <span>Đăng nhập để mua hàng</span>
+             </button>
+             <button th:if="${session.userLogin != null}" type="submit" class="detail_cart" style="margin-left: 180px;">
+                 <span><i class="fa-solid fa-cart-shopping"></i></span>
+                 <span>Thêm vào giỏ hàng</span>
+             </button>
+
+             <div class="detail_extra">
+                 <h5>Dịch vụ của chúng tôi</h5>
+                 <div class="detail_extra-item">
+                     <span><i class="fa-solid fa-truck-fast"></i></span>
+                     <span>Giao tận nhà trong 3 - 7 ngày làm việc.</span>
+                 </div>
+                 <div class="detail_extra-item">
+                     <span><i class="fa-sharp fa-regular fa-star"></i></span>
+                     <span>Miễn phí giao hàng Toàn Quốc cho đơn hàng trên 300k.</span>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
+ <!-- ----------------- -->
+
+ <!-- Mô tả sản phẩm -->
+ <div th:fragment="Detail-book-description" class="mo_ta_sp container">
+     <h4 class="title">Mô tả sản phẩm</h4>
+     <p th:text="${detailBook.description}" class="description"></p>
+ </div>
+ <!-- ----------------- -->

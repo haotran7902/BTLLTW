@@ -1,0 +1,37 @@
+<div th:fragment="Top-slider" class="top-slider-wrap">
+    <div class="" style="background-color: var(--primary-color)">
+        <div class="top-slider container">
+            <div class="slider-item">
+                <div class="category">
+                    <h4 class="category-title">
+                        <i class="fa-solid fa-bars"></i> <span>DANH MỤC SÁCH</span>
+                    </h4>
+                    <div class="category-list-wrap">
+                        <ul class="category-list">
+                            <li th:each="o : ${listC}" class="category-item">
+                                <a th:href="@{/category(cateID = ${o.category_id})}"> 
+                                    <span class="category-item-name" th:text="${o.name}"></span> 
+                                    <span><i class="fa-solid fa-chevron-right"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-item">
+                <span><i class="fa-solid fa-truck-fast"></i></span> 
+                <span>Ship COD Trên Toàn Quốc</span>
+            </div>
+            <div class="slider-item">
+                <span><i class="fa-solid fa-money-bill-wave"></i></span> 
+                <span>Miễn phí vận chuyển</span>
+            </div>
+            <div class="slider-item tra-cuu-don-hang">
+                <a href="#"> 
+                    <span><i class="fa-solid fa-phone"></i></span> 
+                    <span>Tra cứu đơn hàng</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

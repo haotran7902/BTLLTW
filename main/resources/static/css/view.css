@@ -1,0 +1,79 @@
+.view_wrap{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 32px;
+}
+
+.view_item label{
+    color: var(--primary-color)
+}
+/* Left */
+.view_left{
+    width: 50%;
+}
+
+.view_left > div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px
+}
+
+.view_name, .view_author, .view_date,.view_numpage{
+    width: 42%;
+}
+
+.view_item input{
+    width: 100%;
+}
+
+.view_item.view_description, .view_item.view_major{
+    display: block;
+
+}
+#description{
+    resize: none;
+    width: 100%;
+
+}
+
+.view_item.view_major > label{
+    display: block;
+}
+
+input[type=file] {
+    margin-bottom: 26px;
+}
+
+.view_button{
+    text-align: right;
+    margin-right: 160px;
+    margin-bottom: 50px;
+    margin-top: 42px;
+}
+
+.view_button > span{
+    color: #fff;
+    background-color: var(--primary-color);
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+    border-radius: 7px;
+    box-shadow: 0 0 26px #a39c9c63;
+    user-select: none;
+    transition: all 0.1s linear;
+    cursor: pointer;
+}
+
+.view_button > span:hover{
+    background-color: rgb(19 65 143 / 74%);
+}
+
+
+.edit,.save,.add{
+    display: none;
+}
+
+.edit.active,.save.active,.add.active{
+    display: inline-block;
+}
+  

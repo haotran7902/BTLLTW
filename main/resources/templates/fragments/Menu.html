@@ -1,0 +1,59 @@
+<div th:fragment="Menu" class="header bg">
+	<div class="header-wrapper">
+		<div class="toggle-box">
+			<a href="#" class="header__toggle"> <i class="fa-solid fa-bars"></i>
+			</a>
+		</div>
+		<div class="header__tel">
+			<a th:href="@{/home}"><i class="control-icon fa-solid fa-house"></i> <span>Home</span></a>
+		</div>
+		
+		<input th:if="${session.userLogin != null}" type="text" th:value="${session.userLogin?.first_name + ' ' + session.userLogin?.last_name}" class="btn btn-primary bg-success" readonly>
+		
+		<div class="header__logo">
+			<a href="https://www.mancity.com/" class="logo__link"> <img
+				src="https://images.squarespace-cdn.com/content/v1/609d3f6b843ce178c395d676/1625757695503-TMGD50INLJS8IZAHORR8/STL+final+logo+.png" class="logo__img" />
+			</a>
+		</div>
+		<div class="header__control">
+			<form th:action="@{/search}" th:method="post"
+               class="form-inline my-3">
+               <div class="input-group" style="width: 300px; padding-right: 15px;">
+                   <input th:value="${keyword}" th:name="txt" type="text"
+                       class="form-control input-style" aria-label="Small" placeholder="Search...">
+                       <button type="submit" class="bg-success text-light button-search">
+                           <i class="fa fa-search"></i>
+                       </button>
+               </div>
+            </form>&#160;&#160;&#160;
+			
+			<div th:if="${session.userLogin == null}" class="header__user">
+				<a th:href="@{/login}" class="header__user-link" title="Login"> <i
+					class="control-icon fa-solid fa-user"></i>
+				</a>
+			</div>
+			&#160;&#160;
+			<div th:each="role : ${session.userLogin?.roles}" class="header__manage">
+				<a th:if="${role.name == 'ADMIN'}" th:href="@{/manage}" title="Manage Your Web"> <i class="fa-solid fa-bars-progress"
+					style="color: #181573;"></i>
+				</a>
+			</div>
+			&#160;&#160;
+			<div th:if="${session.userLogin != null}" class="header__cart">
+				<a th:href="@{/cart}" class="header__cart-link" title="Go To Cart"> 
+					<i class="control-icon fa-solid fa-cart-shopping"></i> 
+					<span th:if="${cart != 0}" class="header__cart--notify" th:text="${cart}"></span>
+				</a>
+			</div>
+
+			<div th:if="${session.userLogin != null}" class="header__cart">
+                <a th:href="@{/logout}" class="header__cart-link" title="Log out" onclick="return confirm('Are you sure you want to logout?')">
+                    <i class="control-icon fa-solid fa-right-from-bracket"></i>
+                </a>
+            </div>
+		</div>
+	</div>
+	<div class="mobile__search-box">
+		<input type="text" placeholder="Search ..." />
+	</div>
+</div>

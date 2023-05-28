@@ -1,0 +1,77 @@
+<!-- Thu vien  -->
+<div th:fragment="List-all-title" class="row">
+	<div class="col-12">
+		<div class="title-box">
+			<div class="wrap-content">
+				<h3 class="title-group">LIST ALL BOOKS</h3>
+				<div class="title-group-desc">Read book to get success!</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- category  -->
+<div th:fragment="List-all-title-cate" class="row">
+	<div class="col-12">
+		<div class="title-box">
+			<div class="wrap-content">
+				<h3 class="title-group" th:text="'Sách ' + ${cname}"></h3>
+				<div class="title-group-desc" th:text="'Có tất cả ' + ${#lists.size(listB)} + ' cuốn sách thỏa mãn'"></div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- category  -->
+<!-- List product -->
+<div th:fragment="List-all-content" class="row product-list">
+	<div th:each="o : ${listB}" class="col-3">
+		<div class="product-information">
+			<a th:href="@{/detail/{id}(id = ${o.book.book_id})}" class="product-item">
+				<div class="product-item__img">
+					<img th:src="${o.book.image}">
+				</div>
+				<h4 class="product-item__name" th:text="${o.book.title}"></h4>
+				
+				<div class="total_star">
+		             <span th:if="${o.avgStar != 'Chua ban'}" class="text-dark text-center" th:inline="text">
+					    [[${o.avgStar}]]
+					    <span style="color: #ffe433; "><i class="fa fa-star"></i></span>
+					     - đã bán [[${o.book.book_id}]]
+					 </span>
+					 <span th:if="${o.avgStar == 'Chua ban'}" class="text-dark text-center" th:inline="text">
+					    --/5
+					    <span style="color: #ffe433; "><i class="fa fa-star"></i></span>
+					     - đã bán [[${o.book.sold}]]
+					 </span>
+		        </div>
+
+				<div class="product-item__price">
+					<span class="price-old" th:text="${(o.book.price + 100000)/1000} + '.000đ'"></span>
+					<span class="price-new" th:text="${o.book.price/1000} + '.000đ'"></span>
+				</div>
+				<div class="product-item__sale-off"
+					th:text="${'-' + 10000000/(o.book.price+100000)} + '%'"></div>
+			</a>
+			
+			<form th:action="${session.userLogin} != null ? @{/save/order-detail-1} : @{/login}" 
+				th:method="${session.userLogin} != null ? post : get" class="product-item__quick-view">
+				<input type="hidden" th:name="book_id" th:value="${o.book.book_id}" />
+				<input type="hidden" th:name="quantity" value="1">
+                <a th:if="${session.userLogin != null}" class="quick-view--btn">
+                    <button type="submit" class="detail_cart mua_ngay_btn" th:onclick="return confirm('Are you sure you want to buy this book?')">
+                        <span><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span>Buy Now</span>
+                    </button>
+                </a>
+                <a th:if="${session.userLogin == null}" class="quick-view--btn">
+                    <button type="submit" class="detail_cart mua_ngay_btn">
+                        <span><i class="fa-solid fa-cart-shopping"></i></span>
+                        <span>Login to Buy</span>
+                    </button>
+                </a>
+            </form>
+			
+		</div>
+	</div>
+</div>

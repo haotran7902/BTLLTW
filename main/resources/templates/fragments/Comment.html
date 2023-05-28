@@ -1,0 +1,67 @@
+ <div th:fragment="Comment" class="comment container">
+     <div class="title">Bình luận</div>
+     <div class="total_comment">
+         <div class="total_star">
+             <span th:if="${#lists.size(comments) > 0}" class="numstar" th:inline="text">
+			    [[${averageStar}]]/5
+			    <span style="color: #ffe433; "><i class="fa fa-star"></i></span>
+			</span>
+         </div>
+         <div th:if="${#lists.size(comments) > 0}" class="total_danhgia">
+             <span th:inline="text">
+             	Tất cả có [[${#lists.size(comments)}]] đánh giá và nhận xét
+             </span>
+         </div>
+         <div th:if="${#lists.size(comments) == 0}" class="total_danhgia">
+             <span th:inline="text">
+             	Chưa có nhận xét và đánh giá
+             </span>
+         </div>
+     </div>
+     <a th:if="${session.userLogin == null}" th:href="@{/login}" class="link_to_sigin">Đăng nhập để bình luận</a>
+     <form th:action="@{/save/comment}" th:if="${session.userLogin != null}" class="your_commment">
+         <input type="hidden" th:name="book_id" th:value="${detailBook.book_id}" />
+         <div class="danh_gia">
+             <p>Đánh giá của bạn*</p>
+             <div class="star-rating">
+			    <div th:each="rating : ${#numbers.sequence(1, 5)}">
+				    <span>
+				    	<span th:text="${rating}"></span>
+				        <input type="radio" th:id="'star' + ${rating}" th:name="'rating'"
+				               th:value="${rating}" th:checked="${rating == 5}">
+				        <label th:for="'star' + ${rating}"></label>
+				    </span>
+				</div>
+
+			</div>
+         </div>
+         <div class="nhan_xet">
+             <p><label for="review">Nhận xét của bạn*</label></p>
+             <textarea id="review" th:name="content" rows="8" cols="100" required></textarea>
+             <br>
+         </div>
+         <input type="submit" class="btn btn-primary text-center" value="Send">
+     </form>
+     <div th:each="c : ${comments}" class="comment_group">
+         <div class="comment_item">
+             <div class="comment_item-left">
+                 <span><i class="fa-regular fa-user"></i></span>
+             </div>
+             <div class="comment_item-right">
+                 <p class="user_name" th:text="${c.user.first_name + ' ' + c.user.last_name}"></p>
+                 <div class="detail_rating">
+                 <span th:each="starNumber : ${#numbers.sequence(1, c.star)}"  style="color: #ffe433;"> 
+                 	<i class="fa fa-star"></i>
+				 </span>
+				 <span th:if="${c.star < 5}" th:each="starNumber : ${#numbers.sequence(1, 5-c.star)}"  style="color: #ffe433;"> 
+                 	<i class="fa-regular fa-star"></i>
+				 </span>
+             </div>
+                 <p class="text-break" style="max-width: 800px;">
+				  <span th:text="${c.content}"></span>
+				</p>
+             </div>
+         </div>
+         <hr style="width: 800px;">
+     </div>
+ </div>
